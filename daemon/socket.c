@@ -17,6 +17,9 @@ void setup_socket() {
     addr.sun_family = AF_UNIX;
     char *socket_path = "/home/nils/test.sock";
     strcpy(addr.sun_path, socket_path);
+    if(unlink(socket_path) < 0) {
+        syslog(LOG_ERR, "Socket file (%s) could not be deleted.", socket_path);
+    }
     if (bind(sock, (struct sockaddr*)&addr, sizeof(struct sockaddr_un)) < 0) {
         syslog(LOG_ERR, "Error on socket creation for the daemon: %d", errno);
         exit(EXIT_FAILURE);
@@ -35,6 +38,7 @@ void setup_socket() {
         client = accept(sock, &client_addr, &size);
         if (client > 0) {
             syslog(LOG_INFO, "Client connected.");
+            close(sock);
             exit(EXIT_SUCCESS);
         }
         syslog(LOG_INFO, "Doin smth else");

@@ -4,7 +4,6 @@
 
 int main() {
     openlog("rgbd", LOG_PID, LOG_USER);
-    syslog(LOG_INFO, "Hallo Welt");
     setup_daemon();
     // Now we are the daemon (two parents quit). Our location is / and we don't have any file descriptors open
     setup_socket();
