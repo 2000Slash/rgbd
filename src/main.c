@@ -7,7 +7,7 @@
 
 int main(int argc, char *argv[]) {
     int sock = socket(AF_UNIX, SOCK_STREAM, 0);
-    char *path = "/home/nils/test.sock";
+    char *path = "/tmp/rgbd.sock";
     struct sockaddr_un server;
     server.sun_family = AF_UNIX;
     strcpy(server.sun_path, path);

@@ -15,7 +15,7 @@ int setup_socket() {
     struct sockaddr_un addr;
     memset(&addr, 0, sizeof(addr));
     addr.sun_family = AF_UNIX;
-    char *socket_path = "/home/nils/test.sock";
+    char *socket_path = "/tmp/rgbd.sock";
     strcpy(addr.sun_path, socket_path);
     if(unlink(socket_path) < 0) {
         syslog(LOG_ERR, "Socket file (%s) could not be deleted.", socket_path);
