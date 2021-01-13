@@ -9,4 +9,4 @@
 
 // fork.c is the file responsible for setting up the daemon. (forking and closing file descriptors for example)
 
-void setup_socket();
+int setup_socket();

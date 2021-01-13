@@ -6,7 +6,7 @@
 #define BACKLOG 10
 
 
-void setup_socket() {
+int setup_socket() {
     int sock = socket(AF_UNIX, SOCK_STREAM, 0);
     if( sock < 0) {
         exit(EXIT_FAILURE);
@@ -24,24 +24,11 @@ void setup_socket() {
         syslog(LOG_ERR, "Error on socket creation for the daemon: %d", errno);
         exit(EXIT_FAILURE);
     }
-    syslog(LOG_INFO, "Socket spawned");
     listen(sock, BACKLOG);
-    long save_fd = fcntl(sock, F_GETFL);
-    save_fd |= O_NONBLOCK;
-    fcntl(sock, F_SETFL, save_fd);
+    //long save_fd = fcntl(sock, F_GETFL);
+    //save_fd |= O_NONBLOCK;
+    //fcntl(sock, F_SETFL, save_fd);
+    syslog(LOG_INFO, "Successfully created socket");
+    return sock;
     // Use non blocking mode. This way we can check for new connections but also for new usb devices connected
-
-    struct sockaddr client_addr;
-    int client;
-    int size;
-    while(1) {
-        client = accept(sock, &client_addr, &size);
-        if (client > 0) {
-            syslog(LOG_INFO, "Client connected.");
-            close(sock);
-            exit(EXIT_SUCCESS);
-        }
-        syslog(LOG_INFO, "Doin smth else");
-        sleep(1);
-    }
 }

@@ -5,7 +5,7 @@
 #include <errno.h>
 #include <unistd.h>
 
-int main() {
+int main(int argc, char *argv[]) {
     int sock = socket(AF_UNIX, SOCK_STREAM, 0);
     char *path = "/home/nils/test.sock";
     struct sockaddr_un server;
@@ -15,6 +15,7 @@ int main() {
     if(i < 0) {
         printf("Fehler: %d", errno);
     }
+    write(sock, argv[1], 7);
     close(sock);
     close(i);
 }
