@@ -13,17 +13,18 @@ int main() {
     struct sockaddr client_addr;
     int client;
     int size;
-    char color[] = "ff0000";
+    char color[10];
     while(1) {
         client = accept(sock, &client_addr, &size);
         if (client > 0) {
             syslog(LOG_INFO, "Client connected.");
-            read(client, color, 7);
+            FILE *in = fdopen(client, "r");
+            fgets(color, 10, in);
             syslog(LOG_INFO, "Received color: %s", color);
             setColor(color);
         }
     }
 
-    puts("Goodbye cruel world");
+    puts("Daemon closing");
     return 0;
 }
