@@ -2,9 +2,10 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	"github.com/2000Slash/rgbd/controller/lowlevel"
+	"github.com/2000Slash/rgbd/controller/midlevel"
 	"errors"
 	"regexp"
+	"fmt"
 )
 
 var setCmd = &cobra.Command {
@@ -16,7 +17,10 @@ var setCmd = &cobra.Command {
 }
 
 func changeColor(cmd *cobra.Command, args[] string) {
-	lowlevel.WriteToSocket("2" + args[0])
+	err := midlevel.SetAllColors(args[0])
+	if err != nil {
+		fmt.Println(err)
+	}
 }
 
 func init() {
