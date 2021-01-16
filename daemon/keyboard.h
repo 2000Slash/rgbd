@@ -6,4 +6,4 @@
 #endif
 
 
-EXTERNC void setColor(char *pcolor);
+EXTERNC void setColor(char *);
