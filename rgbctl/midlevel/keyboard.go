@@ -1,7 +1,7 @@
 package midlevel
 
 import (
-	"github.com/2000Slash/rgbd/controller/lowlevel"
+	"github.com/2000Slash/rgbd/rgbctl/lowlevel"
 	"strconv"
 )
 
@@ -13,4 +13,8 @@ const (
 
 func SetAllColors(color string) error {
 	return lowlevel.WriteToSocket(strconv.Itoa(cmd_change_color) + color);
+}
+
+func Update() error {
+	return lowlevel.WriteToSocket("1");
 }

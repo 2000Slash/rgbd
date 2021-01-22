@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/2000Slash/rgbd/controller/cmd"
+	"github.com/2000Slash/rgbd/rgbctl/cmd"
 )
 
 func main() {

@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	"github.com/2000Slash/rgbd/controller/midlevel"
+	"github.com/2000Slash/rgbd/rgbctl/midlevel"
 	"errors"
 	"regexp"
 	"fmt"
