@@ -3,6 +3,7 @@
 #include <sys/stat.h>
 #include <signal.h>
 #include <errno.h>
+#include <sys/types.h>
 #include <syslog.h>
 #include <stdio.h>
 

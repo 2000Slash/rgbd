@@ -24,6 +24,10 @@ int setup_socket() {
         syslog(LOG_ERR, "Error on socket creation for the daemon: %d", errno);
         exit(EXIT_FAILURE);
     }
+    if (chmod(socket_path, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH) < 0) {
+        syslog(LOG_ERR, "Error on socket permissions: %d", errno);
+        exit(EXIT_FAILURE);
+    }
     listen(sock, BACKLOG);
     //long save_fd = fcntl(sock, F_GETFL);
     //save_fd |= O_NONBLOCK;

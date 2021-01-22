@@ -1,4 +1,6 @@
 #include "fork.h"
+#include <fcntl.h>
+
 
 void create_daemon();
 void post_fork();
@@ -6,10 +8,12 @@ void post_fork();
 
 // Setting up the daemon
 void setup_daemon(){
+    create_daemon();
     setsid();
     signal(SIGCHLD, SIG_IGN);
     signal(SIGHUP, SIG_IGN);
     create_daemon();
+    post_fork();
 }
 
 // creates a daemon. The child process just exits.
@@ -25,7 +29,6 @@ void create_daemon() {
 
 // close file descriptors and chdir
 void post_fork() {
-    umask(0);
     chdir("/");
     close(STDIN_FILENO);
     close(STDOUT_FILENO);
