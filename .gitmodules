@@ -1,0 +1,3 @@
+[submodule "g810-led"]
+	path = g810-led
+	url = https://github.com/MatMoul/g810-led.git

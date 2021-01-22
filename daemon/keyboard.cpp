@@ -1,5 +1,5 @@
 #include "keyboard.h"
-#include <g810-led/Keyboard.h>
+#include <classes/Keyboard.h>
 
 int setAllKeys(LedKeyboard &kbd, std::string arg2);
 bool parseColor(std::string val, LedKeyboard::Color &color);
