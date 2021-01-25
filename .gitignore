@@ -1,0 +1,7 @@
+rgbd
+libg810-led.so
+CMakeCache.txt
+cmake_install.cmake
+CMakeFiles/
+rgbctl/rgbctl
+Makefile

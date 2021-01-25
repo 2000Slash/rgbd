@@ -16,5 +16,5 @@ func SetAllColors(color string) error {
 }
 
 func Update() error {
-	return lowlevel.WriteToSocket("1");
+	return lowlevel.WriteToSocket(strconv.Itoa(cmd_refresh));
 }
