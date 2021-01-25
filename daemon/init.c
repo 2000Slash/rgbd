@@ -2,6 +2,7 @@
 #include "socket.h"
 #include <sys/syslog.h>
 #include "parser.h"
+#include "keyboard/Keyboard_C.h"
 
 int main() {
     openlog("rgbd", LOG_PID, LOG_USER);
@@ -9,7 +10,10 @@ int main() {
     // Now we are the daemon (two parents quit). Our location is / and we don't have any file descriptors open
     int sock = setup_socket();
     // A socket is now created
-
+    if(init_keyboard() < 0) {
+        syslog(LOG_ERR, "Keyboard handle could not be created.");
+        exit(EXIT_FAILURE);
+    }
     struct sockaddr client_addr;
     int client;
     int size;

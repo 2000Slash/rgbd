@@ -1,22 +1,23 @@
-#include "keyboard.h"
-#include <classes/Keyboard.h>
+#include "Keyboard.h"
 
 int setAllKeys(LedKeyboard &kbd, std::string arg2);
 bool parseColor(std::string val, LedKeyboard::Color &color);
 
-void setColor(char *pcolor) {
-    std::string color(pcolor);
-    LedKeyboard kbd;
+LedKeyboard kbd;
+
+int Keyboard::setFullColor(std::string color) {
+    return setAllKeys(kbd, color);
+}
+
+int init_keyboard() {
     std::string serial;
     uint16_t vendorID = 0x0;
     uint16_t productID = 0x0;
 
     if (!kbd.open(vendorID, productID, serial)) {
-        std::cout << "Matching or compatible device not found !" << std::endl;
-        return;
+        return -1;
     }
-
-    setAllKeys(kbd, pcolor);
+    return 0;
 }
 
 
