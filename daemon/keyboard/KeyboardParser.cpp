@@ -2,5 +2,5 @@
 
 
 int KeyboardParser::setAllKeys(std::string color) {
-    return Keyboard::setFullColor(color);
+    return Keyboard::setAllKeys(color);
 }

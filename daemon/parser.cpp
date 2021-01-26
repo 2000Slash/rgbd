@@ -23,6 +23,9 @@ int parse(char *text) {
         case cmd_exit:
             syslog(LOG_INFO, "Received exit");
             exit(EXIT_SUCCESS);
+        case cmd_refresh:
+            syslog(LOG_INFO, "Refreshing");
+            Keyboard::refresh();
         case cmd_setall_color:
             syslog(LOG_INFO, "Setting all color");
             std::string color(&text[1]);
