@@ -27,7 +27,9 @@ int main() {
             if (str == NULL) {
                 syslog(LOG_ERR, "No text could be read on the socket.");
             } else {
-                parse(input);
+                if (parse(input) < 0) {
+                    syslog(LOG_ERR, "Something went wrong while parsing. Errno: %d", errno);
+                };
             }
         }
     }

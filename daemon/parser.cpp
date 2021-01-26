@@ -3,6 +3,8 @@
 #include <syslog.h>
 #include "keyboard/KeyboardParser.h"
 
+#define offset 2
+
 enum Command {
     cmd_exit = 0,
     cmd_refresh = 1,
@@ -10,6 +12,7 @@ enum Command {
 };
 
 int parse(char *text) {
+    syslog(LOG_INFO, "Received %s.", text);
     std::string inputText(text);
     if(inputText.length() == 0) {
         return -1;
@@ -17,6 +20,7 @@ int parse(char *text) {
 
     enum Command cmd;
     char command_char = text[0];
+
     cmd = static_cast<Command>(atoi(&command_char));
 
     switch(cmd) {
@@ -26,10 +30,17 @@ int parse(char *text) {
         case cmd_refresh:
             syslog(LOG_INFO, "Refreshing");
             Keyboard::refresh();
+            return 0;
         case cmd_setall_color:
-            syslog(LOG_INFO, "Setting all color");
-            std::string color(&text[1]);
-            return KeyboardParser::setAllKeys(color);
+            char attribute;
+            attribute = text[1];
+            syslog(LOG_INFO, "Setting all color. Attribute: %c", attribute);
+            std::string color(&text[offset]);
+            if (Keyboard::setAllKeys(color) < 0) return -1;
+            if(attribute == '1') {
+                Keyboard::refresh();
+            }
+            return 0;
     }
 
     return -1;

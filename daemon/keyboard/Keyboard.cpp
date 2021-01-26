@@ -1,4 +1,5 @@
 #include "Keyboard.h"
+#include <syslog.h>
 
 int setAllKeys(LedKeyboard &kbd, std::string arg2);
 bool parseColor(std::string val, LedKeyboard::Color &color);
@@ -7,6 +8,7 @@ LedKeyboard kbd;
 LedKeyboard::KeyValueArray keyColors;
 
 int Keyboard::refresh() {
+    syslog(LOG_INFO, "Refreshing keyboard color. %d", keyColors.size());
     if (! kbd.open()) return 1;
     if (!kbd.setKeys(keyColors)) return 1;
     if (!kbd.commit()) return 1;
@@ -26,6 +28,7 @@ int init_keyboard() {
 
 
 int Keyboard::setAllKeys(std::string colorString) {
+    keyColors.clear();
     LedKeyboard::Color color;
     if (! parseColor(colorString, color)) return 1;
     for (uint8_t i = 0; i < keyGroupLogo.size(); i++) keyColors.push_back({keyGroupLogo[i], color});
@@ -38,7 +41,6 @@ int Keyboard::setAllKeys(std::string colorString) {
     for (uint8_t i = 0; i < keyGroupNumeric.size(); i++) keyColors.push_back({keyGroupNumeric[i], color});
     for (uint8_t i = 0; i < keyGroupModifiers.size(); i++) keyColors.push_back({keyGroupModifiers[i], color});
     for (uint8_t i = 0; i < keyGroupKeys.size(); i++) keyColors.push_back({keyGroupKeys[i], color});
-    refresh();
     return 0;
 }
 

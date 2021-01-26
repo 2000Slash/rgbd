@@ -8,22 +8,26 @@ import (
 	"fmt"
 )
 
-var setCmd = &cobra.Command {
-	Use: "set",
-	Short: "Set the Keyboard's color",
-	Long: "Change the color that rgbd sets on each update.",
-	Args: isValidColor,
-	Run: changeColor,
-}
+var (
+	setCmd = &cobra.Command {
+		Use: "set",
+		Short: "Set the Keyboard's color",
+		Long: "Change the color that rgbd sets on each update.",
+		Args: isValidColor,
+		Run: changeColor,
+	}
+	noCommit bool
+)
 
 func changeColor(cmd *cobra.Command, args[] string) {
-	err := midlevel.SetAllColors(args[0])
+	err := midlevel.SetAllColors(args[0], !noCommit)
 	if err != nil {
 		fmt.Println(err)
 	}
 }
 
 func init() {
+	setCmd.Flags().BoolVarP(&noCommit, "no-commit", "", false, "If you want to set the color but not send it to the keyboard.")
 	rootCmd.AddCommand(setCmd)
 }
 

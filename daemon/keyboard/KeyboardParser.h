@@ -6,7 +6,6 @@
 
 namespace KeyboardParser {
         LedKeyboard::KeyValueArray parse(std::string);
-        int setAllKeys(std::string);
 }
 
 
