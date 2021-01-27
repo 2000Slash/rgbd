@@ -47,12 +47,16 @@ LedKeyboard::KeyValue* findKeyValue(LedKeyboard::Key key) {
             return &value;
         }
     }
-    return &(keyColors.at(keyColors.size()));
+    return nullptr;
 }
 
 
 int Keyboard::setKeyColor(LedKeyboard::KeyValue keyColor) {
     LedKeyboard::KeyValue* key = findKeyValue(keyColor.key);
+    if(key == nullptr) {
+        syslog(LOG_ERR, "Key could not be found");
+        return -1;
+    }
     key->color = keyColor.color;
     syslog(LOG_INFO, "Key %d found: %d, %d, %d", key->key, key->color.red, key->color.green, key->color.blue);
     return 0;
