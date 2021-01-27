@@ -7,6 +7,7 @@
 namespace Keyboard {
     int setAllKeys(std::string);
     int refresh();
+    int setKeyColor(LedKeyboard::KeyValue);
 
     typedef std::vector<LedKeyboard::Key> KeyArray;
 

@@ -1,5 +1,6 @@
 #include "Keyboard.h"
 #include <syslog.h>
+#include <algorithm>
 
 int setAllKeys(LedKeyboard &kbd, std::string arg2);
 bool parseColor(std::string val, LedKeyboard::Color &color);
@@ -23,6 +24,37 @@ int init_keyboard() {
     if (!kbd.open(vendorID, productID, serial)) {
         return -1;
     }
+
+    // initialize keyColors array
+    LedKeyboard::Color color = {255, 255, 255};
+    for (uint8_t i = 0; i < Keyboard::keyGroupLogo.size(); i++) keyColors.push_back({Keyboard::keyGroupLogo[i], color});
+    for (uint8_t i = 0; i < Keyboard::keyGroupIndicators.size(); i++) keyColors.push_back({Keyboard::keyGroupIndicators[i], color});
+    for (uint8_t i = 0; i < Keyboard::keyGroupMultimedia.size(); i++) keyColors.push_back({Keyboard::keyGroupMultimedia[i], color});
+    for (uint8_t i = 0; i < Keyboard::keyGroupGKeys.size(); i++) keyColors.push_back({Keyboard::keyGroupGKeys[i], color});
+    for (uint8_t i = 0; i < Keyboard::keyGroupFKeys.size(); i++) keyColors.push_back({Keyboard::keyGroupFKeys[i], color});
+    for (uint8_t i = 0; i < Keyboard::keyGroupFunctions.size(); i++) keyColors.push_back({Keyboard::keyGroupFunctions[i], color});
+    for (uint8_t i = 0; i < Keyboard::keyGroupArrows.size(); i++) keyColors.push_back({Keyboard::keyGroupArrows[i], color});
+    for (uint8_t i = 0; i < Keyboard::keyGroupNumeric.size(); i++) keyColors.push_back({Keyboard::keyGroupNumeric[i], color});
+    for (uint8_t i = 0; i < Keyboard::keyGroupModifiers.size(); i++) keyColors.push_back({Keyboard::keyGroupModifiers[i], color});
+    for (uint8_t i = 0; i < Keyboard::keyGroupKeys.size(); i++) keyColors.push_back({Keyboard::keyGroupKeys[i], color});
+    return 0;
+}
+
+// Either finds the key in KeyColors or returns the last value. Similar to Vector::find
+LedKeyboard::KeyValue* findKeyValue(LedKeyboard::Key key) {
+    for(auto& value: keyColors) {
+        if(value.key == key) {
+            return &value;
+        }
+    }
+    return &(keyColors.at(keyColors.size()));
+}
+
+
+int Keyboard::setKeyColor(LedKeyboard::KeyValue keyColor) {
+    LedKeyboard::KeyValue* key = findKeyValue(keyColor.key);
+    key->color = keyColor.color;
+    syslog(LOG_INFO, "Key %d found: %d, %d, %d", key->key, key->color.red, key->color.green, key->color.blue);
     return 0;
 }
 

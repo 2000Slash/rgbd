@@ -9,6 +9,7 @@ enum Command {
     cmd_exit = 0,
     cmd_refresh = 1,
     cmd_setall_color = 2,
+    cmd_set_key = 3
 };
 
 int parse(char *text) {
@@ -21,6 +22,9 @@ int parse(char *text) {
     enum Command cmd;
     char command_char = text[0];
 
+    char attribute;
+    std::string color;
+
     cmd = static_cast<Command>(atoi(&command_char));
 
     switch(cmd) {
@@ -32,11 +36,20 @@ int parse(char *text) {
             Keyboard::refresh();
             return 0;
         case cmd_setall_color:
-            char attribute;
             attribute = text[1];
-            syslog(LOG_INFO, "Setting all color. Attribute: %c", attribute);
-            std::string color(&text[offset]);
+            syslog(LOG_INFO, "Setting all color.");
+            color = std::string(&text[offset]);
             if (Keyboard::setAllKeys(color) < 0) return -1;
+            if(attribute == '1') {
+                Keyboard::refresh();
+            }
+            return 0;
+        case cmd_set_key:
+            attribute = text[1];
+            LedKeyboard::KeyValue keyColor = KeyboardParser::parseCharColor(std::string(&text[2]));
+            color = std::string(&text[offset]);
+            syslog(LOG_INFO, "Setting key %d.", keyColor.key);
+            if (Keyboard::setKeyColor(keyColor) < 0) return -1;
             if(attribute == '1') {
                 Keyboard::refresh();
             }
