@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.19)
 project(rgbd)
 
 
-list(APPEND daemon_sources "daemon/init.c" "daemon/fork.c" "daemon/socket.c" "daemon/parser.cpp" "daemon/keyboard/KeyboardParser.cpp" "daemon/keyboard/Keyboard.cpp")
+list(APPEND daemon_sources "daemon/init.c" "daemon/fork.c" "daemon/socket.c" "daemon/parser.cpp" "daemon/keyboard/KeyboardParser.cpp" "daemon/keyboard/Keyboard.cpp" "daemon/keyboard/KeyboardConfig.cpp")
 list(APPEND g810_sources "g810-led/src/main.cpp" "g810-led/src/classes/Keyboard.cpp" "g810-led/src/helpers/help.cpp" "g810-led/src/helpers/utils.cpp")
 
 add_executable(rgbd ${daemon_sources})

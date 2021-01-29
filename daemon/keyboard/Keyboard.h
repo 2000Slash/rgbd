@@ -5,9 +5,17 @@
 #include "Keyboard_C.h"
 
 namespace Keyboard {
+    // Sets the color of all keys in KeyArray to the color defined in the string
     int setAllKeys(std::string);
+    // commits the current keyConfig to the keyboard
     int refresh();
+    // Sets a specific key to a specific color
     int setKeyColor(LedKeyboard::KeyValue);
+    // inits the config
+    void initConfig();
+    LedKeyboard::KeyValueArray getKeyColors();
+    void setKeyColors(LedKeyboard::KeyValueArray array);
+    void saveConfig();
 
     typedef std::vector<LedKeyboard::Key> KeyArray;
 

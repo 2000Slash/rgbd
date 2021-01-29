@@ -30,6 +30,10 @@ int parse(char *text) {
     switch(cmd) {
         case cmd_exit:
             syslog(LOG_INFO, "Received exit");
+            attribute = text[1];
+            if (attribute == '1') {
+                Keyboard::saveConfig();
+            }
             exit(EXIT_SUCCESS);
         case cmd_refresh:
             syslog(LOG_INFO, "Refreshing");

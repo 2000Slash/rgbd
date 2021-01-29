@@ -9,11 +9,18 @@ LedKeyboard kbd;
 LedKeyboard::KeyValueArray keyColors;
 
 int Keyboard::refresh() {
-    syslog(LOG_INFO, "Refreshing keyboard color. %d", keyColors.size());
     if (! kbd.open()) return 1;
     if (!kbd.setKeys(keyColors)) return 1;
     if (!kbd.commit()) return 1;
     return 0;
+}
+
+LedKeyboard::KeyValueArray Keyboard::getKeyColors() {
+    return keyColors;
+}
+
+void Keyboard::setKeyColors(LedKeyboard::KeyValueArray array) {
+    keyColors = array;
 }
 
 int init_keyboard() {
@@ -37,6 +44,9 @@ int init_keyboard() {
     for (uint8_t i = 0; i < Keyboard::keyGroupNumeric.size(); i++) keyColors.push_back({Keyboard::keyGroupNumeric[i], color});
     for (uint8_t i = 0; i < Keyboard::keyGroupModifiers.size(); i++) keyColors.push_back({Keyboard::keyGroupModifiers[i], color});
     for (uint8_t i = 0; i < Keyboard::keyGroupKeys.size(); i++) keyColors.push_back({Keyboard::keyGroupKeys[i], color});
+
+    Keyboard::initConfig();
+    Keyboard::refresh();
     return 0;
 }
 
