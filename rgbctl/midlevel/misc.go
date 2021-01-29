@@ -5,6 +5,10 @@ import (
 	"strconv"
 )
 
-func Exit() error {
-	return lowlevel.WriteToSocket(strconv.Itoa(cmd_exit));
+func Exit(noSave bool) error {
+	if noSave {
+		return lowlevel.WriteToSocket(strconv.Itoa(cmd_exit) + "0");
+	} else {
+		return lowlevel.WriteToSocket(strconv.Itoa(cmd_exit) + "1");
+	}
 }

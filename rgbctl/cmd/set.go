@@ -35,7 +35,7 @@ func changeColor(cmd *cobra.Command, args[] string) {
 
 func init() {
 	setCmd.Flags().BoolVarP(&noCommit, "no-commit", "", false, "If you want to set the color but not send it to the keyboard.")
-	setCmd.Flags().StringVarP(&key, "key", "k", "", "Set only a specific key to that color.")
+	setCmd.Flags().StringVarP(&key, "key", "k", "", "Only set a specific key to that color.")
 	rootCmd.AddCommand(setCmd)
 }
 
