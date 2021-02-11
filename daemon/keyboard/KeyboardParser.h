@@ -7,6 +7,7 @@
 namespace KeyboardParser {
         // Parses a key and a color seperated by a semicolon. For example "a;ff0000" returns a KeyValue of key a and a color of ff0000
         LedKeyboard::KeyValue parseCharColor(std::string);
+        void splitColors(std::string, LedKeyboard::Color&, LedKeyboard::Color&);
 }
 
 

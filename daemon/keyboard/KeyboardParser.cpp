@@ -17,3 +17,10 @@ LedKeyboard::KeyValue KeyboardParser::parseCharColor(std::string input) {
     LedKeyboard::KeyValue keyColor = {key, color};
     return keyColor;
 }
+
+void KeyboardParser::splitColors(std::string input, LedKeyboard::Color& color1, LedKeyboard::Color& color2) {
+    std::string color1str = input.substr(0, 6);
+    std::string color2str = input.substr(6, 6);
+    utils::parseColor(color1str, color1);
+    utils::parseColor(color2str, color2);
+}

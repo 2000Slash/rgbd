@@ -23,6 +23,22 @@ void Keyboard::setKeyColors(LedKeyboard::KeyValueArray array) {
     keyColors = array;
 }
 
+// Comparing colors made easy :)
+bool operator==(const LedKeyboard::Color color1, const LedKeyboard::Color color2) {
+    return color1.red == color2.red && color1.blue == color2.blue && color1.green == color2.green;
+}
+
+// Replaces all keyColors of a specific color with another specific color
+void Keyboard::replaceColor(LedKeyboard::Color color1, LedKeyboard::Color color2) {
+    for (LedKeyboard::KeyValue& keyColor : keyColors) {
+        if(keyColor.color == color1) {
+            keyColor.color = color2;
+            syslog(LOG_INFO, "FOUND!");
+        }
+        syslog(LOG_INFO, "%d %d %d", keyColor.color.red, keyColor.color.green, keyColor.color.blue);
+    }
+}
+
 int init_keyboard() {
     std::string serial;
     uint16_t vendorID = 0x0;

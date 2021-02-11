@@ -16,6 +16,7 @@ namespace Keyboard {
     LedKeyboard::KeyValueArray getKeyColors();
     void setKeyColors(LedKeyboard::KeyValueArray array);
     void saveConfig();
+    void replaceColor(LedKeyboard::Color, LedKeyboard::Color);
 
     typedef std::vector<LedKeyboard::Key> KeyArray;
 
