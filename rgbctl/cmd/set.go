@@ -18,12 +18,15 @@ var (
 	}
 	noCommit bool
 	key string
+	color string
 )
 
 func changeColor(cmd *cobra.Command, args[] string) {
 	var err error;
-	if(key != "") {
+	if key != "" {
 		err = midlevel.SetKeyColor(key, args[0], !noCommit)
+	} else if color != "" {
+		err = midlevel.SwitchColor(color, args[0], !noCommit)
 	} else {
 		err = midlevel.SetAllColors(args[0], !noCommit)
 	}
@@ -36,6 +39,7 @@ func changeColor(cmd *cobra.Command, args[] string) {
 func init() {
 	setCmd.Flags().BoolVarP(&noCommit, "no-commit", "", false, "If you want to set the color but not send it to the keyboard.")
 	setCmd.Flags().StringVarP(&key, "key", "k", "", "Only set a specific key to that color.")
+	setCmd.Flags().StringVarP(&color, "color", "c", "", "Set all keys with this color to another color.")
 	rootCmd.AddCommand(setCmd)
 }
 
